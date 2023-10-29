@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from .image_processing import ImageResizer
 import os
+from django_resized import ResizedImageField
 User = get_user_model()
 
 
@@ -23,11 +24,12 @@ class Articles(models.Model):
     english_level = models.IntegerField(null=False, blank=False, choices=LEVELS_CHOICES, default="Beginner")
     publish_date = models.DateField(null=True, blank=True)
     picture = models.ImageField(upload_to=image_path, null=True, blank=True)
-    picture_1600_1200 = models.ImageField(upload_to=image_path, null=True, blank=True)
-    picture_1366_768 = models.ImageField(upload_to=image_path, null=True, blank=True)
-    picture_1024_768 = models.ImageField(upload_to=image_path, null=True, blank=True)
-    picture_800_480 = models.ImageField(upload_to=image_path, null=True, blank=True)
-    picture_480_320 = models.ImageField(upload_to=image_path, null=True, blank=True)
+    picture_1600_1200 = ResizedImageField(size=[800, 400], upload_to=image_path, blank=True, null=True)
+    # picture_1366_768 = models.ImageField(upload_to=image_path, null=True, blank=True)
+    # picture_1024_768 = models.ImageField(upload_to=image_path, null=True, blank=True)
+    # picture_800_480 = models.ImageField(upload_to=image_path, null=True, blank=True)
+    # picture_480_320 = models.ImageField(upload_to=image_path, null=True, blank=True)
+
 
     def __str__(self):
         return str(self.title)
