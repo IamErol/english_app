@@ -12,7 +12,7 @@ class ArticlesViewSet(viewsets.ModelViewSet):
     A simple ViewSet for viewing and editing the articles.
     """
     serializer_class = ArticlesSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     queryset = Articles.objects.all()
 
     def perform_create(self, serializer):
