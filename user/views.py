@@ -9,6 +9,8 @@ from django.urls import reverse
 import jwt
 import os
 from .serializers import RegisterSerializer, EmailVerificationSerializer, LogoutSerializer
+
+
 User = get_user_model()
 
 class RegisterView(generics.GenericAPIView):
