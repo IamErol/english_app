@@ -1,26 +1,50 @@
+import os
+
 from PIL import Image
+from PIL.Image import NEAREST
+from django.core.files import File
+from pathlib import Path
+from io import BytesIO
 
-class ImageResizer:
-    """Resize image."""
+from django.core.files.base import ContentFile
 
-    SIZE_CHOICES  = {
-        "1600x1338": (1600, 1338),
-        "1366x768": (1366, 768),
-        "1024x768": (1024, 768),
-        "800x480": (800, 480),
-        "480x320": (480, 320),
-    }
+image_types = {
+    "jpg": "JPEG",
+    "jpeg": "JPEG",
+    "png": "PNG",
+    "gif": "GIF",
+    "tif": "TIFF",
+    "tiff": "TIFF",
+                }
 
-    def __init__(self, image):
-        self.image = image
 
-    def resize(self, width=None, height=None, size_choice=None):
-        if size_choice:
-            if size_choice in self.SIZE_CHOICES:
-                width, height = self.SIZE_CHOICES[size_choice]
-            else:
-                raise ValueError("Invalid size choice")
+def image_resize(image, instance):
+    original_image = Image.open(image)
+    sizes = [(1600, 1200), (1366, 768), (1024, 768), (800, 480), (480, 320)]
+    image_name, extention = os.path.splitext(image.name)
+    print(f"this is image name from resizer{image_name}")
+    for size in sizes:
+        if original_image.mode == 'RGBA':
+            original_image.convert('RGB')
+        img = original_image.copy()
+        img = img.resize(size, NEAREST)
 
-        resized_image = Image.open(self.image)
-        resized_image = resized_image.size(width, height)
-        return resized_image
+        image_field_name = f"image_{size[0]}_{size[1]}"
+        image_field = getattr(instance, image_field_name)
+        ext = original_image.format
+        print(f"image ext name: {ext}")
+        print(f"original_image.mode: {original_image.mode}")
+        if original_image.format == 'JPEG':
+            output = BytesIO()
+            img.save(output, format='JPEG', quality=95)
+            image_field.save(f'{image_name}/image_{size[0]}_{size[1]}.jpg', ContentFile(output.getvalue()), save=False)
+        elif original_image.format == 'PNG':
+            output = BytesIO()
+            img.save(output, format='PNG')
+            image_field.save(f'{image_name}/image_{size[0]}_{size[1]}.png', ContentFile(output.getvalue()), save=False)
+
+
+
+
+
+
