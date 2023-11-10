@@ -121,6 +121,7 @@ if DEBUG:
         }
     }
 else:
+    print('server db active.')
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('POSTGRES_URL'))
     }

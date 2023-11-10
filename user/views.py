@@ -1,6 +1,3 @@
-from .serializers import (RegisterSerializer,
-                          EmailVerificationSerializer,
-                          LogoutSerializer)
 from rest_framework import generics, status, permissions
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
@@ -11,7 +8,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 import jwt
 import os
-
+from .serializers import RegisterSerializer, EmailVerificationSerializer, LogoutSerializer
 User = get_user_model()
 
 class RegisterView(generics.GenericAPIView):
