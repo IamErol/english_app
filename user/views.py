@@ -1,9 +1,3 @@
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import DjangoUnicodeDecodeError, smart_bytes
-from django.utils.http import urlsafe_base64_encode
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.settings import api_settings
-
 from .serializers import (RegisterSerializer,
                           EmailVerificationSerializer,
                           LogoutSerializer)

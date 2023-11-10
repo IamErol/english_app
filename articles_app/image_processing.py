@@ -1,11 +1,7 @@
 import os
-
 from PIL import Image
 from PIL.Image import NEAREST
-from django.core.files import File
-from pathlib import Path
 from io import BytesIO
-
 from django.core.files.base import ContentFile
 
 image_types = {
@@ -16,7 +12,6 @@ image_types = {
     "tif": "TIFF",
     "tiff": "TIFF",
                 }
-
 
 def image_resize(image, instance):
     original_image = Image.open(image)
