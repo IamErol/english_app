@@ -55,6 +55,7 @@ class FavouritedArticleSerializer(ModelSerializer):
 #     image = ReturnImagesSerializer
 
 
+
 class ImageSizesSerializer(serializers.Serializer):
     el = serializers.ImageField(source='image_1600_1200')
     lg = serializers.ImageField(source='image_1366_768')
