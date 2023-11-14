@@ -35,17 +35,40 @@ class FavouritedArticleSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class ReturnImagesSerializer(ModelSerializer):
-    """
-    Serializer for resized images return.
-    """
+# class ReturnImagesSerializer(ModelSerializer):
+#     """
+#     Serializer for resized images return.
+#     """
+#
+#     el = serializers.ImageField(source='image_1600_1200')
+#     lg = serializers.ImageField(source='image_1366_768')
+#     md = serializers.ImageField(source='image_1024_768')
+#     sm = serializers.ImageField(source='image_800_480')
+#     es = serializers.ImageField(source='image_480_320')
+#
+#     class Meta:
+#         model = Pictures
+#         fields = ('el', 'lg', 'md', 'sm', 'es')
+#
+#
+# class Image(serializers.Serializer):
+#     image = ReturnImagesSerializer
 
+
+class ImageSizesSerializer(serializers.Serializer):
     el = serializers.ImageField(source='image_1600_1200')
     lg = serializers.ImageField(source='image_1366_768')
     md = serializers.ImageField(source='image_1024_768')
     sm = serializers.ImageField(source='image_800_480')
     es = serializers.ImageField(source='image_480_320')
 
+class ReturnImagesSerializer(ModelSerializer):
+    """
+    Serializer for resized images return.
+    """
+
+    image = ImageSizesSerializer(source='*')
+
     class Meta:
         model = Pictures
-        fields = ('el', 'lg', 'md', 'sm', 'es')
+        fields = ('image',)

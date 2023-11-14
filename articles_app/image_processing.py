@@ -17,7 +17,6 @@ def image_resize(image, instance):
     original_image = Image.open(image)
     sizes = [(1600, 1200), (1366, 768), (1024, 768), (800, 480), (480, 320)]
     image_name, extention = os.path.splitext(image.name)
-    print(f"this is image name from resizer{image_name}")
     for size in sizes:
         if original_image.mode == 'RGBA':
             original_image.convert('RGB')
@@ -27,8 +26,6 @@ def image_resize(image, instance):
         image_field_name = f"image_{size[0]}_{size[1]}"
         image_field = getattr(instance, image_field_name)
         ext = original_image.format
-        print(f"image ext name: {ext}")
-        print(f"original_image.mode: {original_image.mode}")
         if original_image.format == 'JPEG':
             output = BytesIO()
             img.save(output, format='JPEG', quality=95)

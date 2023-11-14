@@ -44,3 +44,4 @@ class Pictures(models.Model):
 class FavouritedArticle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Articles, related_name="article", on_delete=models.CASCADE)
+
